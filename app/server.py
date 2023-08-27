@@ -93,7 +93,6 @@ def verify_domain():
         result = (dns.resolver.query(user["domain"], 'TXT'))
 
         for i in result:
-
             if str(i).replace('"', '') == user["domain_verification_code"]:
                 db.users.update_one({"_id": session["ID"]}, {"$set": {"domain_verified": True}})
                 return jsonify({"status": "success", "message": "Domain verified"}), 200
