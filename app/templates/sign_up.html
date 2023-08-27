@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | CertSecure</title>
+</head>
+<body>
+    <p id="error-text" class="danger"> {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %} {{ message }}</li> {% endfor %} 
+    </ul> {% endif %} {% endwith %} &nbsp; </p> 
+    <h1>Sign Up</h1>
+    <form action="/sign-up" method="post">
+        <label for="email">Username</label>
+        <input type="email" name="email" id="email" required>
+        <br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+        <br>
+        <br>
+        <input type="submit" value="Sign Up">
+    </form>
+    <p>Already have an account? <a href="sign-in">Sign In</a></p>
+    
+</body>
+</html>

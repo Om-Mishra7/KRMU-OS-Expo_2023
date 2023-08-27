@@ -1,0 +1,30 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Certificate | CertSecure</title>
+    <link rel="stylesheet" href="/static/css/certificate.css" />
+  </head>
+  <body class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Certificate of Excellence</h1>
+          <p>
+            <b>{{certificate["issuing_authority"].title()}}</b> herby bestows
+            this certificate to
+            <b>{{certificate["student_name"].title()}}</b> for completing the
+            course <b>{{certificate["certificate_title"].title()}}</b> with a
+            CPGA of <b>{{certificate["student_cgp"]}}</b> on
+            <b>{{certificate["issuing_date"]}}</b>.
+          </p>
+          <p>Regards,</p>
+          <p><b>{{certificate["issuing_authority"].title()}}</b></p>
+          <br />
+          <br />
+          <p class="info">This certificate has been verified by CertSecure.</p>
+            <p class="info"><b>{{certificate["_id"].upper()}}</b></p>
+        </div>
+      </div>
+  </body>
+</html>

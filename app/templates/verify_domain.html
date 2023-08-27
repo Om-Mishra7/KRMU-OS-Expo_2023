@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Domain | CertSecure</title>
+    <script>
+        function verifyDomain() {
+            fetch('/api/v1/verify/domain', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                }).then(response => response.json())
+                .then(data => {
+                    if (data['status'] == 'success') {
+                        document.getElementById('verification_status').innerHTML = 'Domain verified successfully.';
+                    } else {
+                        document.getElementById('verification_status').innerHTML = 'Domain verification failed.';
+                    }
+                });
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Verify Domain</h1>
+
+    <p>Add the following TXT record to your DNS configuration:</p>
+    <p>Domain Name - {{domain}}</p>
+    <p>Record Type - TXT</p>
+    <p>Record Value - {{domain_verification_code}}</p>
+    <p>Please make sure this is the only TXT record on the domain</p>
+     
+    <br>
+    <p>Once you have added the record, click the button below to verify your domain.</p>
+    <br>
+    <button id="verifyButton" type="button" onclick="verifyDomain()">Verify Domain</button>
+    <br>
+    <p id="verification_status"></p>
+    
+</body>
+</html>

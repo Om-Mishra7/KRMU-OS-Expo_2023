@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status</title>
+    <link rel="stylesheet" href="/static/css/status.css">
+</head>
+<body>
+
+    {% for i in data %}
+    {% if i.status == "generated" %}
+        <div class="generated">
+            <p>Certificate ID: {{i._id.title()}}</p>
+            <p>Certificate Status: {{i.status.title()}}</p>
+            <p>Certificate Address: {{i.address.title()}}</p>
+            <p>Student Name: {{i.student_name.title()}}</p>
+            <p>Student CGPA: {{i.student_cgp.title()}}</p>
+            <p>Certificate Title: {{i.certificate_title.title()}}</p>
+            <p>Certificate Issuing Athourity: {{i.issuing_authority.title()}}</p>
+            <p>Certificate Issue Date: {{i.issuing_date.title()}}</p>
+
+        </div>
+    {% else %}
+        <div class="not_generated">
+            <p>Certificate ID: {{i._id.title()}}</p>
+            <p>Certificate Status: {{i.status.title()}}</p>
+            <p>Certificate Address: {{i.address.title()}}</p>
+            <p>Student Name: {{i.student_name.title()}}</p>
+            <p>Student CGPA: {{i.student_cgp.title()}}</p>
+            <p>Certificate Title: {{i.certificate_title.title()}}</p>
+            <p>Certificate Issuing Athourity: {{i.issuing_authority.title()}}</p>
+            <p>Certificate Issue Date: {{i.issuing_date.title()}}</p>
+
+        </div>
+    {% endif %}
+    {% endfor %}
+    
+</body>
+</html>

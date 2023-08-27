@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&family=Manrope&display=swap');
+
+
+
+.container {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    height: max-content;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed black;
+    padding: 5%;
+    background-color: #f5f5f5;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.col-md-12 {
+    width: 100%;
+}
+
+.info {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1rem;
+    text-align: center;
+    margin: 10px;
+}
