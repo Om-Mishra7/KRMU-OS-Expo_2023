@@ -6,6 +6,8 @@ from pymongo import MongoClient
 from web3.middleware import geth_poa_middleware
 
 
+
+
 install_solc("0.8.0")
 
 
@@ -44,24 +46,6 @@ def generateCertificate(
     _IssuingAuthority,
     _IssuingDate,
 ):
-    with open("app\contracts\Certificate.sol", "r") as file:
-        contract_file = file.read()
-
-    compiled_sol = compile_standard(
-        {
-            "language": "Solidity",
-            "sources": {"Certificate.sol": {"content": contract_file}},
-            "settings": {
-                "outputSelection": {
-                    "*": {"*": ["abi", "metadata", "evm.bytecode", "evm.sourceMap"]}
-                }
-            },
-        },
-        solc_version="0.8.0",
-    )
-
-    with open("compiled_contract.json", "w") as file:
-        json.dump(compiled_sol, file)
 
     with open("compiled_contract.json", "r") as file:
         compiled_sol = json.load(file)

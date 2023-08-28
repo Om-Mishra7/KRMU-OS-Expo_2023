@@ -14,7 +14,7 @@
                 }).then(response => response.json())
                 .then(data => {
                     if (data['status'] == 'success') {
-                        document.getElementById('verification_status').innerHTML = 'Domain verified successfully.';
+                        window.location.href = '/login';
                     } else {
                         document.getElementById('verification_status').innerHTML = 'Domain verification failed.';
                     }

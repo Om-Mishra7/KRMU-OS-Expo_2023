@@ -5,8 +5,6 @@ from flask_session import Session
 from generator import viewCertificate, process_data
 import secrets
 import dns.resolver
-import ssl
-
 
 app = Flask(__name__)
 
@@ -182,8 +180,6 @@ def create_certificate():
             "student_profile_picture_url": student_profile_picture_url,
             "certificate_title": certificate_title,
             "issuing_authority": issuing_authority,
-            "organization_logo_url": db.users.find_one({"_id": session["ID"]})["logo_url"],
-            "organization_id" : session["ID"],
             "issuing_date": issuing_date,
             "address": "",
             "status": "pending",
