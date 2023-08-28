@@ -93,10 +93,10 @@ Thank you for hosting the KRMU-OS-Expo_2023 Hackathon! The Certificate Managemen
 
 I hope you find this project useful and look forward to hearing your feedback. Please feel free to reach out if you have any questions or suggestions.
 
-Best regards,
+Best regards,  
 Team Innova8ors
 
-[Om Mishra](https://github.com/Om-Mishra7)
+[Om Mishra](https://github.com/Om-Mishra7)  
 [Yash Soni](https://github.com/Yash-Soni7744)
 
 
