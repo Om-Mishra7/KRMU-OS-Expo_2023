@@ -5,6 +5,7 @@ from flask_session import Session
 from generator import viewCertificate, process_data
 import secrets
 import dns.resolver
+import ssl
 
 
 app = Flask(__name__)
@@ -42,12 +43,12 @@ def sign_up():
             flash("Email / Password cannot be empty")
             return redirect(url_for("sign_up"))
         
+        
         if db.users.find_one({"email": email}) is not None:
             flash("User already exists")
             return redirect(url_for("sign_up"))
         
         db.users.insert_one({"email": email, "password": password, "domain_verified": False, "domain": email.split("@")[1], "domain_verification_code": f"certsecure-verification-{secrets.token_hex(32)}"})
-        session["logged_in"] = True
         session["email"] = email
         session["domain_verification_code"] = db.users.find_one({"email": email})["domain_verification_code"]
         session["ID"] = db.users.find_one({"email": email})["_id"]
@@ -55,9 +56,41 @@ def sign_up():
 
     return render_template("sign_up.html")
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        if email is None or password is None:
+            flash("Email / Password cannot be empty")
+            return redirect(url_for("login"))
+        
+        if db.users.find_one({"email": email}) is None:
+            flash("User does not exist")
+            return redirect(url_for("sign_up"))
+        
+        session["email"] = email
+        session["ID"] = db.users.find_one({"email": email})["_id"]
+        
+        if not db.users.find_one({"email": email})["domain_verified"]:
+            flash("Domain not verified")
+            return redirect(url_for("verify_domain_page"))
+        
+        if db.users.find_one({"email": email})["password"] != password:
+            flash("Incorrect password")
+            return redirect(url_for("login"))
+
+        session["logged_in"] = True
+        session["email"] = email
+        return redirect(url_for("dashboard"))
+
+    return render_template("login.html")
+
+
 @app.route("/verify-domain", methods=["GET"])
 def verify_domain_page():
-    if session.get("logged_in"):
+    if session.get("ID") is not None:
         if db.users.find_one({"_id": session["ID"]})["domain_verified"]:
             return redirect(url_for("dashboard"))
         else:
@@ -65,10 +98,10 @@ def verify_domain_page():
 
 
 
-@app.route("/status")
-def status():
+@app.route("/dashboard")
+def dashboard():
     if session.get("logged_in"):
-        data = records.find({})
+        data = records.find({"organization_id": session["ID"]})
         return render_template("status.html", data=data)
     else:
         return redirect(url_for("sign_up"))
@@ -122,38 +155,48 @@ def get_blockchain_certificate(certificate_id):
     else:
         return jsonify({"status": "fail", "message": "Certificate not found"}), 404
 
-@app.route("/api/v1/create/certificate", methods=["GET"])
+@app.route("/create/certificate", methods=["GET", "POST"])
 def create_certificate():
-    student_name = request.args.get("student_name")
-    student_cgp = request.args.get("student_cgp")
-    student_profile_picture_url = request.args.get("student_profile_picture_url")
-    certificate_title = request.args.get("certificate_title")
-    issuing_authority = request.args.get("issuing_authority")
-    issuing_date = request.args.get("issuing_date")
+    if request.method == "POST":
+        student_name = request.form.get("student_name")
+        student_cgp = request.form.get("student_cgp")
+        student_profile_picture_url = request.form.get("student_profile_picture_url")
+        certificate_title = request.form.get("certificate_title")
+        issuing_authority = request.form.get("issuing_authority")
+        issuing_date = request.form.get("issuing_date")
 
-    certificate_id = secrets.token_hex(16)
+        if student_name is None or student_cgp is None or student_profile_picture_url is None or certificate_title is None or issuing_authority is None or issuing_date is None:
+            flash("All fields are required")
+            return redirect(url_for("create_certificate"))
+        
 
-    certificate = {
-        "_id": certificate_id,
-        "organization_id" : "ProjectRexa",
-        "student_name": student_name,
-        "student_cgp": student_cgp,
-        "student_profile_picture_url": student_profile_picture_url,
-        "certificate_title": certificate_title,
-        "issuing_authority": issuing_authority,
-        "issuing_date": issuing_date,
-        "address": "",
-        "status": "pending",
-    }
 
-    records.insert_one(certificate)
 
-    return jsonify({"status": "success", "data": {"certificate_id": certificate_id}}), 200
+
+        certificate_id = secrets.token_hex(16)
+
+        certificate = {
+            "_id": certificate_id,
+            "student_name": student_name,
+            "student_cgp": student_cgp,
+            "student_profile_picture_url": student_profile_picture_url,
+            "certificate_title": certificate_title,
+            "issuing_authority": issuing_authority,
+            "organization_logo_url": db.users.find_one({"_id": session["ID"]})["logo_url"],
+            "organization_id" : session["ID"],
+            "issuing_date": issuing_date,
+            "address": "",
+            "status": "pending",
+        }
+
+        records.insert_one(certificate)
+
+        flash("Certificate created successfully")
+        return redirect(url_for("create_certificate"))
+    return render_template("create_certificate.html")
 
     
 
-print("Processing data")
-process_data()
 @scheduler.task('interval', id='processData', seconds=600)
 def my_job():
     print("Processing data")

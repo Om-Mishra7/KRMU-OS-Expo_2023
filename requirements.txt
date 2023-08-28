@@ -1,0 +1,9 @@
+flask
+pyOpenSSL
+flask_apscheduler
+flask_session
+pymongo
+dnspython
+web3
+py-solc-x
+

@@ -1,2 +1,0 @@
-import dns.resolver
-
