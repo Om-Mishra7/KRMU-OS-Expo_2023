@@ -3,15 +3,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate | CertSecure</title>
+    <link rel="stylesheet" href="/static/css/create_certificate.css">
+    <link rel="icon" href="/static/logo.png" type="image/x-icon">
 </head>
 <body>
+
+    <div class="error">
+        <p id="error-text" class="danger"> {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %} {{ message }}</li> {% endfor %} 
+        </ul> {% endif %} {% endwith %} &nbsp; </p>
+    </div>
     
     <form action="/create/certificate" method="post">
-        <input type="text" name="name" placeholder="Name">
-        <input type="text" name="gpa" placeholder="CGPA">
-        <input type="text" name="course" placeholder="Course">
-        <input type="text" name="date" placeholder="Date">
+        <input type="text" name="student_name" placeholder="Name">
+        <input type="text" name="student_cgp" placeholder="CGPA">
+        <input type="text" name="certificate_title" placeholder="Course">
+        <input type="text" name="issuing_authority" placeholder="Issuing Athority">
+        <input type="date" name="issuing_date" placeholder="Date">
         <input type="submit" name="submit" value="Create Certificate">
+        
+    </form>
+
+    <button onclick="window.location.href='/dashboard'">View Certificates</button>
+    
     
 </body>
 </html>

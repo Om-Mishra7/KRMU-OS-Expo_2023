@@ -28,7 +28,10 @@ records = db.certificates
 
 @app.route("/")
 def index():
-    return "CertSecure, a blockchain based certificate issuing system"
+    if session.get("logged_in"):
+        return redirect(url_for("dashboard"))
+    else:
+        return redirect(url_for("login"))
 
 
 @app.route("/sign-up", methods=["GET", "POST"])
@@ -55,6 +58,7 @@ def sign_up():
     return render_template("sign_up.html")
 
 @app.route("/login", methods=["GET", "POST"])
+@app.route("/sign-in", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form.get("email")
@@ -83,7 +87,7 @@ def login():
         session["email"] = email
         return redirect(url_for("dashboard"))
 
-    return render_template("login.html")
+    return render_template("sign_in.html")
 
 
 @app.route("/verify-domain", methods=["GET"])
@@ -92,7 +96,7 @@ def verify_domain_page():
         if db.users.find_one({"_id": session["ID"]})["domain_verified"]:
             return redirect(url_for("dashboard"))
         else:
-            return render_template("verify_domain.html", domain_verification_code=session["domain_verification_code"], domain=session["email"].split("@")[1])
+            return render_template("verify_domain.html", domain_verification_code=db.users.find_one({"_id": session["ID"]})["domain_verification_code"], domain=session["email"].split("@")[1])
 
 
 
@@ -100,12 +104,11 @@ def verify_domain_page():
 def dashboard():
     if session.get("logged_in") or request.args.get("logged_in") == "true":
         if session.get("logged_in"):
-            data = records.find({"organization_id": session["ID"]})
-        else:
-            data = records.find({})
+            # Arrange in descending order
+            data = records.find({}).sort("issuing_date")
         return render_template("status.html", data=data)
     else:
-        return redirect(url_for("sign_up"))
+        return redirect(url_for("login"))
 
 @app.route("/view/certificate/<string:certificate_id>")
 def view_certificate(certificate_id):
@@ -161,12 +164,12 @@ def create_certificate():
     if request.method == "POST":
         student_name = request.form.get("student_name")
         student_cgp = request.form.get("student_cgp")
-        student_profile_picture_url = request.form.get("student_profile_picture_url")
         certificate_title = request.form.get("certificate_title")
         issuing_authority = request.form.get("issuing_authority")
         issuing_date = request.form.get("issuing_date")
 
-        if student_name is None or student_cgp is None or student_profile_picture_url is None or certificate_title is None or issuing_authority is None or issuing_date is None:
+
+        if student_name is None or student_cgp is None or certificate_title is None or issuing_authority is None or issuing_date is None:
             flash("All fields are required")
             return redirect(url_for("create_certificate"))
         
@@ -177,7 +180,7 @@ def create_certificate():
             "_id": certificate_id,
             "student_name": student_name,
             "student_cgp": student_cgp,
-            "student_profile_picture_url": student_profile_picture_url,
+            "student_profile_picture_url": "None",
             "certificate_title": certificate_title,
             "issuing_authority": issuing_authority,
             "issuing_date": issuing_date,
@@ -191,9 +194,13 @@ def create_certificate():
         return redirect(url_for("create_certificate"))
     return render_template("create_certificate.html")
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
     
 
-@scheduler.task('interval', id='processData', seconds=600)
+@scheduler.task('interval', id='processData', seconds=60)
 def my_job():
     print("Processing data")
     process_data()
@@ -205,4 +212,4 @@ if __name__ == "__main__":
 
     scheduler.start()
 
-    app.run(debug=True)
+    app.run()
