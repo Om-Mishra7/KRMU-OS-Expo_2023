@@ -41,6 +41,8 @@ This repository contains code for a Certificate Management System implemented us
 
 4. Access the application in your web browser by navigating to `http://127.0.0.1:5000/`.
 
+5. Username - test@example.com | Password - admin
+
 ### Features
 
 - **Sign Up / Sign In**: Users can sign up using their email and password or sign in if they already have an account.
