@@ -2,6 +2,8 @@
 
 This repository contains code for a Certificate Management System implemented using Flask and Polygon blockchain based on Etereum. The system allows users to create, view, and verify certificates securely on the blockchain.
 
+![CertSecure Logo](https://raw.githubusercontent.com/Om-Mishra7/KRMU-OS-Expo_2023/master/app/static/logo.png)
+
 ### Prerequisites
 
 1. **Python**: Make sure you have Python 3.x installed on your system.
