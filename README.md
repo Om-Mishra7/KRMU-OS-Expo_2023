@@ -99,7 +99,6 @@ Best regards,
 Team Innova8ors
 
 [Om Mishra](https://github.com/Om-Mishra7)  
-[Yash Soni](https://github.com/Yash-Soni7744)
-[Bharat Bhushan](https://github.com/Bharat-Yadav-11)
+[Yash Soni](https://github.com/Yash-Soni7744)  [Bharat Bhushan](https://github.com/Bharat-Yadav-11)
 
 
