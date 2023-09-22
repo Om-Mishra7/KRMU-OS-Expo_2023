@@ -90,7 +90,7 @@ The Certificate Management System presented in your provided code implements a u
 
 8. **Real-World Use Case**: The system addresses a real-world problem: verifying the authenticity of certificates. The use of blockchain and decentralized domain verification contributes to a more secure and reliable certificate ecosystem, which can be particularly beneficial in contexts where digital certificates are used.
 
-In conclusion, the Certificate Management System you've described combines various technologies in a unique way to address the challenges of certificate issuance, storage, and verification. Its use of blockchain, decentralized verification, and automated generation sets it apart as an innovative solution in the field of digital credentials and certificate management.
+In conclusion, the Certificate Management System described combines various technologies in a unique way to address the challenges of certificate issuance, storage, and verification. Its use of blockchain, decentralized verification, and automated generation sets it apart as an innovative solution in the field of digital credentials and certificate management.
 
 
 Thank you for hosting the KRMU-OS-Expo_2023 Hackathon! The Certificate Management System presented here is a testament to the innovative ideas and creative thinking that emerge from such events. The combination of blockchain technology, decentralized verification, and automated certificate generation showcases the potential for transforming traditional processes into more secure and efficient solutions.
