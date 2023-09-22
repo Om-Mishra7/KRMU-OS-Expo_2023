@@ -72,7 +72,7 @@ This repository contains code for a Certificate Management System implemented us
 - The certificate generation process involves compiling and deploying a Solidity smart contract to the blockchain.
 
 
-The Certificate Management System presented in your provided code implements a unique and innovative approach to certificate issuance, storage, and verification. Here are some reasons why this idea can be considered unique:
+The Certificate Management System presented implements a unique and innovative approach to certificate issuance, storage, and verification. Here are some reasons why this idea can be considered unique:
 
 1. **Blockchain Integration for Certificates**: The system leverages the Ethereum blockchain to store certificate data securely. Blockchain technology ensures immutability and transparency, making it an ideal solution for storing sensitive information like certificates. This ensures that once a certificate is generated and stored on the blockchain, it cannot be altered or tampered with, providing a high level of trust and authenticity.
 
