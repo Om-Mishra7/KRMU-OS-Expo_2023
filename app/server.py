@@ -192,7 +192,9 @@ def create_certificate():
 
         flash("Certificate created successfully")
         return redirect(url_for("create_certificate"))
-    return render_template("create_certificate.html")
+    if session.get("logged_in") or request.args.get("logged_in") == "true":
+        return render_template("create_certificate.html")
+    return redirect(url_for("login"))
 
 @app.route('/logout')
 def logout():
